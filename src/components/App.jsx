@@ -1,24 +1,18 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { ContactList } from './ContactList/ContactList';
 
 import { Container } from './Container/Container';
 import { Filter } from './Filter/Filter';
 import PhoneForm from './PhoneForm/PhoneForm';
 
-import { contactsData } from 'Utils/contactsData';
-
 export const App = () => {
-  const [contacts, setContacts] = useState(() => {
-    const stringifiedContacts = localStorage.getItem('contacts');
-    const parsedContacts = JSON.parse(stringifiedContacts) ?? contactsData;
-    return parsedContacts;
-  });
+  const contacts = useSelector(state => state.contactsStore.contacts);
+  console.log('contacts: ', contacts);
+
+  const dispatch = useDispatch();
 
   const [filter, setFilter] = useState('');
-
-  useEffect(() => {
-    localStorage.setItem('contacts', JSON.stringify(contacts));
-  }, [contacts]);
 
   const handleAddContact = newContact => {
     const hasDuplicates = contacts.some(
@@ -29,11 +23,19 @@ export const App = () => {
         `Oops, product with title '${newContact.name}' already exist!`
       );
     }
-    setContacts([newContact, ...contacts]);
+    const addContactsAction = {
+      type: 'contacts/addContacts',
+      payload: newContact,
+    };
+    dispatch(addContactsAction);
   };
 
   const handleDelete = contactId => {
-    setContacts(contacts.filter(contact => contact.id !== contactId));
+    const deleteContactsAction = {
+      type: 'contacts/deleteContacts',
+      payload: contactId,
+    };
+    dispatch(deleteContactsAction);
   };
 
   const handleFilterChange = event => {
