@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ContactList } from './ContactList/ContactList';
 
@@ -7,12 +6,9 @@ import { Filter } from './Filter/Filter';
 import PhoneForm from './PhoneForm/PhoneForm';
 
 export const App = () => {
-  const contacts = useSelector(state => state.contactsStore.contacts);
-  console.log('contacts: ', contacts);
-
+  const contacts = useSelector(state => state.contactsBook.contacts);
+  const filter = useSelector(state => state.filteredBook.filter);
   const dispatch = useDispatch();
-
-  const [filter, setFilter] = useState('');
 
   const handleAddContact = newContact => {
     const hasDuplicates = contacts.some(
@@ -38,12 +34,17 @@ export const App = () => {
     dispatch(deleteContactsAction);
   };
 
-  const handleFilterChange = event => {
-    setFilter(event.target.value);
+  const handleFilterChange = e => {
+    const newFilterValue = e.target.value;
+
+    const changeFilterAction = {
+      type: 'filtered/Contacts',
+      payload: newFilterValue,
+    };
+    dispatch(changeFilterAction);
   };
 
   const handlerFilter = () => {
-    console.log('handlerFilter handlerFilter handlerFilter');
     let searchContact = [];
     if (filter) {
       searchContact = contacts.filter(contact =>
