@@ -12,8 +12,8 @@ export const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const stringifiedProducts = JSON.stringify(contacts);
-    localStorage.setItem('contacts', stringifiedProducts);
+    const stringifiedContacts = JSON.stringify(contacts);
+    localStorage.setItem('contacts', stringifiedContacts);
   }, [contacts]);
 
   const handleAddContact = newContact => {
