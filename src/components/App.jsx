@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { addProduct, deleteContacts } from 'redux/contacts.reducer';
 import { ContactList } from './ContactList/ContactList';
 
 import { Container } from './Container/Container';
@@ -25,19 +26,11 @@ export const App = () => {
         `Oops, product with title '${newContact.name}' already exist!`
       );
     }
-    const addContactsAction = {
-      type: 'contacts/addContacts',
-      payload: newContact,
-    };
-    dispatch(addContactsAction);
+    dispatch(addProduct(newContact));
   };
 
   const handleDelete = contactId => {
-    const deleteContactsAction = {
-      type: 'contacts/deleteContacts',
-      payload: contactId,
-    };
-    dispatch(deleteContactsAction);
+    dispatch(deleteContacts(contactId));
   };
 
   const handleFilterChange = e => {

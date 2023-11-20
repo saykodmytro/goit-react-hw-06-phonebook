@@ -26,3 +26,14 @@ export const contactsReducer = (state = initialState, action) => {
       return state;
   }
 };
+
+export const deleteContacts = payload => {
+  return { type: 'contacts/deleteContacts', payload };
+};
+
+export const addProduct = payload => {
+  return {
+    type: 'contacts/addContacts',
+    payload,
+  };
+};
