@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   addContact,
@@ -15,11 +14,6 @@ export const App = () => {
   const contacts = useSelector(state => state.contactsBook.contacts);
   const filter = useSelector(state => state.contactsBook.filter);
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    const stringifiedContacts = JSON.stringify(contacts);
-    localStorage.setItem('contacts', stringifiedContacts);
-  }, [contacts]);
 
   const handleAddContact = newContact => {
     const hasDuplicates = contacts.some(
