@@ -1,6 +1,10 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addContact, deleteContact } from 'redux/contacts.reducer';
+import {
+  addContact,
+  deleteContact,
+  filteredContact,
+} from 'redux/contacts.reducer';
 import { ContactList } from './ContactList/ContactList';
 
 import { Container } from './Container/Container';
@@ -9,7 +13,7 @@ import PhoneForm from './PhoneForm/PhoneForm';
 
 export const App = () => {
   const contacts = useSelector(state => state.contactsBook.contacts);
-  const filter = useSelector(state => state.filteredBook.filter);
+  const filter = useSelector(state => state.contactsBook.filter);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -35,12 +39,7 @@ export const App = () => {
 
   const handleFilterChange = e => {
     const newFilterValue = e.target.value;
-
-    const changeFilterAction = {
-      type: 'filtered/Contacts',
-      payload: newFilterValue,
-    };
-    dispatch(changeFilterAction);
+    dispatch(filteredContact(newFilterValue));
   };
 
   const handlerFilter = () => {
