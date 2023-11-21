@@ -1,14 +1,34 @@
 import { nanoid } from 'nanoid';
 import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { addContact } from 'redux/contacts.reducer';
 import css from './PhoneForm.module.css';
 
-const PhoneForm = ({ handleAddContact }) => {
+const PhoneForm = () => {
+  const dispatch = useDispatch();
+  const contacts = useSelector(state => state.contactsBook.contacts);
+
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
+  const handleAddContact = newContact => {
+    const hasDuplicates = contacts.some(
+      contact => contact.name.toLowerCase() === newContact.name.toLowerCase()
+    );
+    if (hasDuplicates) {
+      alert(`Oops, contact with name '${newContact.name}' already exists!`);
+    } else {
+      dispatch(addContact(newContact));
+    }
+  };
+
   const handleSubmit = evt => {
     evt.preventDefault();
-    const newContact = { name, number, id: nanoid(5) };
+    const newContact = {
+      name,
+      number: Number.parseFloat(number),
+      id: nanoid(5),
+    };
     handleAddContact(newContact);
     setName('');
     setNumber('');

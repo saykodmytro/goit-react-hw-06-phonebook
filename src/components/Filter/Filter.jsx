@@ -1,5 +1,17 @@
+import { useSelector, useDispatch } from 'react-redux';
+import { filteredContact } from 'redux/contacts.reducer';
+
 import css from './Filter.module.css';
-export const Filter = ({ filter, handleFilterChange }) => {
+
+export const Filter = () => {
+  const filter = useSelector(state => state.contactsBook.filter);
+  const dispatch = useDispatch();
+
+  const handleFilterChange = e => {
+    const newFilterValue = e.target.value;
+    dispatch(filteredContact(newFilterValue));
+  };
+
   return (
     <label className={css.label}>
       <input
@@ -12,3 +24,5 @@ export const Filter = ({ filter, handleFilterChange }) => {
     </label>
   );
 };
+
+export default Filter;
