@@ -22,11 +22,14 @@ const PhoneForm = () => {
     }
   };
 
+  const newName = name.toLowerCase();
+  const newNumber = Number.parseFloat(number);
+
   const handleSubmit = evt => {
     evt.preventDefault();
     const newContact = {
-      name,
-      number: Number.parseFloat(number),
+      name: newName,
+      number: newNumber,
       id: nanoid(5),
     };
     handleAddContact(newContact);
